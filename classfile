@@ -1,0 +1,54 @@
+  String currentdate=CurrentTimeDate.date();
+     String currenttime=CurrentTimeDate.time();
+        DirectoryLocator directoryLocator=new DirectoryLocator();
+String dir=directoryLocator.getcurentlocationdirectory();
+      System.out.println("ddd"+dir);
+   if(dir!=null){
+           try{  
+      Rectangle one = new Rectangle(1200,850);
+       Document doc=new Document(one,20, 10, 10, 15);
+       PdfWriter.getInstance(doc, new FileOutputStream(dir+"/Report.pdf"));
+    
+         doc.open();  
+        PdfPTable pdfPTable=new PdfPTable(jTable2.getColumnCount());
+ pdfPTable.setWidthPercentage(100);
+      pdfPTable.setWidths(new int[]{10,20,20,20,20,30,10,20,20,20,20,20,20,20,10});
+       String title="Title";
+      Paragraph p = new Paragraph(title.toUpperCase());
+ p.setAlignment(Element.ALIGN_CENTER);
+          Font f = p.getFont();
+       f.setStyle(Font.BOLD);
+       f.setSize(40f);
+       f.setColor(BaseColor.DARK_GRAY);
+       p.setFont(f);
+p.setSpacingAfter(20);
+      doc.add(p);
+
+
+      
+     doc.add(new Paragraph("TITLE : title1 "));
+      doc.add(new Paragraph("DATE :"+currentdate+ "    "+"TIME :" +currenttime));
+doc.add(new Paragraph("                    "));
+  for (int i = 0; i < jTable3.getColumnCount(); i++) {
+    pdfPTable.addCell(jTable3.getColumnName(i));
+   }
+   doc.add(pdfPTable);
+     PdfPTable pdfPTable2=new PdfPTable(jTable3.getColumnCount());
+     pdfPTable2.setWidthPercentage(100);
+      pdfPTable2.setWidths(new int[]{1,2,2,2,2,3,1,2,2,2,2,2,2,2,1});
+
+ for (int k = 0; k < jTable3.getRowCount(); k++) {
+      for(int j=0;j<jTable3.getColumnCount();j++){
+          pdfPTable2.addCell(jTable3.getValueAt(k,j).toString()); 
+     }
+                 doc.add(pdfPTable2);
+}
+          doc.close();
+ }
+ catch(Exception e){}
+    
+
+       
+   } else {
+        }
+      
